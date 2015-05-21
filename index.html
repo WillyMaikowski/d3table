@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <title>SorTable</title>
+  <style>
+
+  </style>
+</head>
+<body>
+  <table id="mytable">
+    <thead>
+      <th>Equipo</th>
+      <th>Cuartos</th>
+      <th>Semifinal</th>
+      <th>Final</th>
+      <th>Campeon</th>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+  <script type="text/javascript" src="js/d3.min.js"></script>
+  <script type="text/javascript" src="js/colorbrewer.min.js"></script>
+  <script>
+  d3.tsv( 'data.tsv', function( E, D ) {
+    console.log( D );
+    var c = colorbrewer.Greens[9];
+    var percents = d3.keys( D[0] ).filter( function( k ) {
+      return k != 'Equipo' && k != 'Primero' && k != 'Segundo' && k != 'MejorTercero';
+    } );
+    d3.selectAll( 'thead th' ).data( percents ).on( 'click', function( k ) {
+      tr.sort( function( a, b ) { 
+        return b[k]-a[k]; 
+      } );
+    } );
+    var tr = d3.select( 'tbody' ).selectAll( 'tr' ).data( D ).enter().append( 'tr' );
+    tr.append( 'th' ).text( function( d ) { 
+      return d.Equipo; 
+    } );
+    tr.selectAll( 'td' )
+      .data( function( d ) { 
+        return percents.map( function( k ) { return d[k]; } ); 
+      } )
+      .enter().append( 'td' )
+        .style( 'background-color', function( d ) { return c[Math.floor( d*9 )]; } )
+        .text( function( d ) { return Math.round( d*100 )+'%'; } );
+  } );
+  </script>
+</body>
+</html>

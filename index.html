@@ -35,10 +35,12 @@
   <script>
   d3.tsv( 'data.tsv', function( E, D ) {
     var c = colorbrewer.Greens[9];
-    var margin = {top: 20, right: 30, bottom: 30, left: 40},
-    width = 960 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
-
+    var fieldHeight = 35;
+    var fieldWidth = 90;
+    var margin = { top: 20, right: 30, bottom: 30, left: 40 };
+    var width = 960 - margin.left - margin.right;
+    var height = 500 - margin.top - margin.bottom;
+    
     var canvas = d3.select("svg")
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
@@ -47,10 +49,6 @@
 
     var headerGrp = canvas.append("g").attr("class", "headerGrp");
     var rowsGrp = canvas.append("g").attr("class","rowsGrp");
-
-    var fieldHeight = 35;
-    var fieldWidth = 90;
-
     var previousSort = null;
 
     refreshTable(null);

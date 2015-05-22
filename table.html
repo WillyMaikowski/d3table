@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <title>SorTable</title>
+  <style>
+td {
+  text-align: center;
+  padding: 5px;
+}
+  </style>
+</head>
+<body>
+  <table>
+    <thead>
+      <th>Equipo</th>
+      <th>Cuartos</th>
+      <th>Semifinal</th>
+      <th>Final</th>
+      <th>Campeon</th>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+  <svg></svg>
+  <script type="text/javascript" src="js/d3.min.js"></script>
+  <script type="text/javascript" src="js/colorbrewer.min.js"></script>
+  <script>
+  d3.tsv( 'data.tsv', function( E, D ) {
+    var ord = null;
+    var c = colorbrewer.Greens[9];
+    var percents = d3.keys( D[0] ).filter( function( k ) {
+      return k != 'Primero' && k != 'Segundo' && k != 'MejorTercero';
+    } );
+    d3.selectAll( 'thead th' ).data( percents ).on( 'click', function( k ) {
+      tr.sort( function( a, b ) { return ord == k ? d3.ascending( a[k], b[k] ) : d3.descending( a[k], b[k] ); } )
+      ord = ord == k ? null : k;
+    } );
+    var tr = d3.select( 'tbody' ).selectAll( 'tr' ).data( D ).enter().append( 'tr' );
+    tr.append( 'th' ).text( function( d ) { 
+      return d.Equipo; 
+    } );
+    tr.selectAll( 'td' )
+      .data( function( d ) { 
+        return percents.filter( function(k){ return k != 'Equipo' } ).map( function( k ) { return d[k]; } ); 
+      } )
+      .enter().append( 'td' )
+        .style( 'background-color', function( d ) { return c[Math.floor( d*9 )]; } )
+        .style( 'color', function( d ) { return Math.round( d*100 ) > 30 ? 'white' : 'black' } )
+        .text( function( d ) { return Math.round( d*100 )+'%'; } );
+  } );
+  </script>
+</body>
+</html>

@@ -80,7 +80,7 @@ var show = [
             }            
             ];
 
-var figHeight = 180;
+var figHeight = 160;
 var figWidth = 480;
 d3.tsv("../data.tsv", function(data) {
 	
@@ -113,5 +113,6 @@ d3.tsv("../data.tsv", function(data) {
 			createFlag(s,xCoord, yCoord,flagConvertion[teams[j]],percent+'%',(100-percent)+'%');
 			yCoord += figHeight;
 		}
+		console.log(s);
 	}
 });

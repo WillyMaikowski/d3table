@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>SVG work</title>
+    <link href='http://fonts.googleapis.com/css?family=Bree+Serif' rel='stylesheet' type='text/css'>
+  </head>
+  <body>
+    <svg></svg>
+    <script type="text/javascript" src="snap.svg-min.js"></script>
+    <script>
+    var fstar = function( x, y, w ) {
+      var sz = 3*w/2, yy = y+w/2;
+      return [
+          x,       yy, 
+          x-sz,    yy-sz,
+          x,       yy-sz, 
+          x,       yy-2*sz,
+          x+sz,    yy-sz,
+          x+2*sz,  yy-2*sz,
+          x+2*sz,  yy-sz,
+          x+3*sz,  yy-sz,
+          x+2*sz,  yy,
+          x+3*sz,  yy+sz,
+          x+2*sz,  yy+sz,
+          x+2*sz,  yy+2*sz,
+          x+sz,    yy+sz,
+          x,       yy+2*sz,
+          x,       yy+sz,
+          x-sz,    yy+sz
+      ];
+    };
+    var s = Snap( 'svg' ).attr({
+      height: 1000,
+      width: 1000
+    });
+    Snap.load( 'sprites.svg', function( f ) {
+      var flag = f.select( '#flag-CHI' ).attr({ x:0, y:0, viewBox: '0 0 480 480' });
+      s.append( flag );
+    } );
+    var p = { x: 110, y: 45 };
+    var w = 10;
+    var l = 300;
+    var arrow_ini = s.polygon( [p.x, p.y, p.x+l/3, p.y, p.x+l/3, p.y+w, p.x, p.y+w, p.x+(w/2),p.y+(w/2)] ).attr( { fill: '#ED1C24' } ); 
+    var arrow_pasar = s.polygon( [p.x+l/3, p.y, p.x+l, p.y, p.x+l+(w/2), p.y+(w/2), p.x+l, p.y+w, p.x+l/3, p.y+w] ).attr( { fill: '#ED1C24' } );
+    var arrow_nopasar = s.polygon( [p.x+l/3,p.y+w,p.x+l/3,p.y+w+l/6,p.x+l/3-w/2,p.y+l/6+3*w/2,p.x+l/3-w,p.y+w+l/6,p.x+l/3-w,p.y+w] ).attr( { fill: '#DEDEDE' } );
+    var star_pasar = s.polygon( fstar( p.x+l+10, p.y, w ) ).attr( { fill: '#ED1C24' } );
+    var pasar_txt = s.text( p.x+l+10.5, p.y+w/2+4, '95%' ).attr( { fill: '#FFF', fontFamily: 'Bree Serif' } );
+    var star_nopasar = s.polygon( fstar( p.x+l/3-2*w, p.y+l/6+3*w, w ) ).attr( { fill: '#DEDEDE' } );
+    var nopasar_txt = s.text( p.x+l/3-2*w+5, p.y+l/6+7*w/2+4, '5%' ).attr( { fill: '#FFF', fontFamily: 'Bree Serif' } );  
+    </script>
+  </body>
+</html>

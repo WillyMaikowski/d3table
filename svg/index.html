@@ -6,7 +6,8 @@
     <link href='http://fonts.googleapis.com/css?family=Bree+Serif' rel='stylesheet' type='text/css'>
   </head>
   <body>
-    <svg></svg>
+    
+    <svg id="chile"></svg>
     <script type="text/javascript" src="snap.svg-min.js"></script>
     <script>
     var fstar = function( x, y, w ) {
@@ -30,7 +31,7 @@
           x-sz,    yy+sz
       ];
     };
-    var s = Snap( 'svg' ).attr({
+    var s = Snap( '#chile' ).attr({
       height: 1000,
       width: 1000
     });

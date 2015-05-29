@@ -20,7 +20,7 @@ var fstar = function( x, y, w ) {
       ];
 };
 
-var createFlag = function( svgContainer, xCoord, yCoord, flagName, winProba, loseProba ){
+var createFlag = function( svgContainer, xCoord, yCoord, flagName, winProba, looseProba, color ){
     Snap.load( 'sprites.svg', function( f ) {
       var flag = f.select( '#'+flagName ).attr({ x:xCoord, y:yCoord, viewBox: '0 0 480 480' });
       svgContainer.append( flag );
@@ -28,13 +28,13 @@ var createFlag = function( svgContainer, xCoord, yCoord, flagName, winProba, los
     var p = { x: 110, y: 45 + yCoord };
     var w = 10;
     var l = 300;
-    var arrow_ini = svgContainer.polygon( [p.x, p.y, p.x+l/3, p.y, p.x+l/3, p.y+w, p.x, p.y+w, p.x+(w/2),p.y+(w/2)] ).attr( { fill: '#ED1C24' } ); 
-    var arrow_pasar = svgContainer.polygon( [p.x+l/3, p.y, p.x+l, p.y, p.x+l+(w/2), p.y+(w/2), p.x+l, p.y+w, p.x+l/3, p.y+w] ).attr( { fill: '#ED1C24' } );
+    var arrow_ini = svgContainer.polygon( [p.x, p.y, p.x+l/3, p.y, p.x+l/3, p.y+w, p.x, p.y+w, p.x+(w/2),p.y+(w/2)] ).attr( { fill: color } ); 
+    var arrow_pasar = svgContainer.polygon( [p.x+l/3, p.y, p.x+l, p.y, p.x+l+(w/2), p.y+(w/2), p.x+l, p.y+w, p.x+l/3, p.y+w] ).attr( { fill: color } );
     var arrow_nopasar = svgContainer.polygon( [p.x+l/3,p.y+w,p.x+l/3,p.y+w+l/6,p.x+l/3-w/2,p.y+l/6+3*w/2,p.x+l/3-w,p.y+w+l/6,p.x+l/3-w,p.y+w] ).attr( { fill: '#DEDEDE' } );
-    var star_pasar = svgContainer.polygon( fstar( p.x+l+10, p.y, w ) ).attr( { fill: '#ED1C24' } );
+    var star_pasar = svgContainer.polygon( fstar( p.x+l+10, p.y, w ) ).attr( { fill: color } );
     var pasar_txt = svgContainer.text( p.x+l+10.5, p.y+w/2+4, winProba ).attr( { fill: '#FFF', fontFamily: 'Bree Serif' } );
     var star_nopasar = svgContainer.polygon( fstar( p.x+l/3-2*w, p.y+l/6+3*w, w ) ).attr( { fill: '#DEDEDE' } );
-    var nopasar_txt = svgContainer.text( p.x+l/3-2*w+5, p.y+l/6+7*w/2+4, loseProba ).attr( { fill: '#FFF', fontFamily: 'Bree Serif' } );  
+    var nopasar_txt = svgContainer.text( p.x+l/3-2*w+5, p.y+l/6+7*w/2+4, looseProba ).attr( { fill: '#FFF', fontFamily: 'Bree Serif' } );  
     
 }
 
@@ -63,6 +63,21 @@ var flagConvertion = {
                       Uruguay: 'flag-URU',
                       Venezuela: 'flag-VEN'
 					};
+
+var colorConvertion = {
+        Argentina: '#FBAA19',
+        Bolivia: '#FFD400',
+        Brazil: '#FFF200',
+        Chile: '#ED1C24',
+        Colombia: '#FFCB05',
+        Ecuador: '#FFCB05',
+        Jamaica: '#FFD400',
+        Mexico: '#ED1C24',
+        Paraguay: '#ED1C24',
+        Peru: '#ED1C24',
+        Uruguay: '#FBAA19',
+        Venezuela: '#FFD400'
+		};
 
 
 var show = [
@@ -110,7 +125,7 @@ d3.tsv("../data.tsv", function(data) {
 		for( j = 0; j < teams.length; j++ ){
 			var percent = Math.round(countryData[teams[j]]["Cuartos"]*100, 3);
 			
-			createFlag(s,xCoord, yCoord,flagConvertion[teams[j]],percent+'%',(100-percent)+'%');
+			createFlag(s,xCoord, yCoord,flagConvertion[teams[j]],percent+'%',(100-percent)+'%', colorConvertion[teams[j]]);
 			yCoord += figHeight;
 		}
 		console.log(s);

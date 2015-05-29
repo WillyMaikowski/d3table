@@ -128,6 +128,9 @@ d3.tsv("../data.tsv", function(data) {
 			createFlag(s,xCoord, yCoord,flagConvertion[teams[j]],percent+'%',(100-percent)+'%', colorConvertion[teams[j]]);
 			yCoord += figHeight;
 		}
-		console.log(s);
 	}
 });
+$('#myTab a').click(function (e) {
+	  e.preventDefault()
+	  $(this).tab('show')
+	})

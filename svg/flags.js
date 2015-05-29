@@ -66,7 +66,8 @@ var conf = {
 
 var figHeight = 90;
 var figWidth = 480;
-d3.tsv("../data.tsv", function(data) {	
+d3.tsv("../data_local.tsv", function(data) {
+	console.log(data);
 	for( i = 0; i < data.length; i++ ){
 		var equipo = data[i]["Equipo"];
 		conf[equipo]['d'] = data[i];
@@ -78,7 +79,7 @@ d3.tsv("../data.tsv", function(data) {
   };
   var ycoord = { A: 0, B: 0, C: 0 };
   $.each( conf, function( k, v ) {
-    var perc = Math.round( v.d.Cuartos*100, 3 );
+    var perc = Math.round( Number(v.d.Cuartos)*100, 3 );
     createFlag( s[v.g], 0, ycoord[v.g], v.f, perc+'%', (100-perc)+'%', v.c );
     ycoord[v.g] += figHeight;
   } );

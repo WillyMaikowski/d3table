@@ -14,7 +14,8 @@
         <div role="tabpanel">
           <ul class="nav nav-tabs" role="tablist">
             <li role="presentation" class="active"><a href="#Grupos" aria-controls="Grupos" role="tab" data-toggle="tab">Grupos</a></li>
-            <li role="presentation"><a href="#tabla" aria-controls="tabla" role="tab" data-toggle="tab">Predicción de campeonato</a></li>
+            <li role="presentation"><a href="#tabla_local" aria-controls="tabla_local" role="tab" data-toggle="tab">Predicción de campeonato <br> (Chile con efecto de local)</a></li>
+            <li role="presentation"><a href="#tabla_no_local" aria-controls="tabla_no_local" role="tab" data-toggle="tab">Predicción de campeonato <br> (Chile sin efecto de local)</a></li>
           </ul>
           <div class="tab-content">  
             <div role="tabpanel" class="tab-pane active" id="Grupos">
@@ -28,8 +29,11 @@
               <h3>Grupo C</h3>
               <svg id="GrupoC"></svg>
             </div>
-            <div role="tabpanel" class="tab-pane" id="tabla">
-              <svg id="tablaDatos"></svg>
+            <div role="tabpanel" class="tab-pane" id="tabla_local">
+              <svg id="tablaDatos_local"></svg>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="tabla_no_local">
+              <svg id="tablaDatos_no_local"></svg>
             </div>
           </div>
         </div>

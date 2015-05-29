@@ -4,7 +4,7 @@ d3table( '../data_no_local.tsv', "#tablaDatos_no_local" );
 
 function d3table( dataSource, svgContainer ){
 d3.tsv( dataSource, function( E, D ) {
-    var c = colorbrewer.Greens[9];
+    var c = colorbrewer.Blues[9];
     var fieldHeight = 35;
     var fieldWidth = 90;
     var margin = { top: 20, right: 30, bottom: 30, left: 40 };

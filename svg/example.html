@@ -3,21 +3,27 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>SVG work</title>
-    <link href='http://fonts.googleapis.com/css?family=Bree+Serif' rel='stylesheet' type='text/css' />
+    <link href='http://fonts.googleapis.com/css?family=Lato|Bree+Serif|Pacifico|Kaushan+Script' rel='stylesheet' type='text/css' />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
     <link rel="stylesheet" href="../css/estilos.css" />
   </head>
   <body>
     <div class="row container">
       <div class="col-md-12">
-        <h1>Predicciones Copa América 2015</h1>
+        <h1>
+          <a href="http://www.ceine.cl/" title="Centro de Inteligencia de Negocios">
+            <img src="../images/ceine_logo2.png" title="Centro de Inteligencia de Negocios" width="250" height="83">
+          </a><br/>
+          Copa América 2015<br/><small>Predicciones</small>
+        </h1>
         <div role="tabpanel">
-          <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="active"><a href="#Grupos" aria-controls="Grupos" role="tab" data-toggle="tab">Grupos<br><br></a></li>
-            <li role="presentation"><a href="#tabla_local" aria-controls="tabla_local" role="tab" data-toggle="tab">Predicción de campeonato <br> (Chile con efecto de local)</a></li>
-            <li role="presentation"><a href="#tabla_no_local" aria-controls="tabla_no_local" role="tab" data-toggle="tab">Predicción de campeonato <br> (Chile sin efecto de local)</a></li>
-          </ul>
-          <div class="tab-content">  
+          <div class="col-xs-offset-2 col-xs-8" style="min-height: 45px;">
+            <ul id="pills" class="nav nav-pills nav-justified" role="tablist">
+              <li role="presentation" class="active"><a href="#Grupos" aria-controls="Grupos" role="tab" data-toggle="tab">Grupos</a></li>
+              <li role="presentation"><a href="#tabla" aria-controls="tabla" role="tab" data-toggle="tab">Predicción Global</a></li>
+            </ul>
+          </div>
+          <div class="tab-content col-xs-12">  
             <div role="tabpanel" class="tab-pane active" id="Grupos">
               <h2>Etapa Grupal</h2>
               <h3>Grupo A</h3>
@@ -32,10 +38,11 @@
               <div class="col-md-offset-4"><h4>Pasa a cuartos</h4></div>
               <svg id="GrupoC"></svg>
             </div>
-            <div role="tabpanel" class="tab-pane" id="tabla_local">
+            <div role="tabpanel" class="tab-pane" id="tabla">
+              <h2>Con efecto de localía</h2>
               <svg id="tablaDatos_local"></svg>
-            </div>
-            <div role="tabpanel" class="tab-pane" id="tabla_no_local">
+              <br/>
+              <h2>Sin efecto</h2>
               <svg id="tablaDatos_no_local"></svg>
             </div>
           </div>

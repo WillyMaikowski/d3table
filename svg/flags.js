@@ -22,10 +22,10 @@ var fstar = function( x, y, w ) {
 
 var createFlag = function( svgContainer, xCoord, yCoord, flagName, winProba, looseProba, color ){
     Snap.load( 'sprites.svg', function( f ) {
-      var flag = f.select( '#'+flagName ).attr({ x:xCoord, y:yCoord, viewBox: '0 0 480 480' });
+      var flag = f.select( '#'+flagName ).attr({ x:xCoord, y:yCoord, viewBox: '0 0 600 600' });
       svgContainer.append( flag );
     } );
-    var p = { x: 110, y: 45 + yCoord };
+    var p = { x: 90, y: 35 + yCoord };
     var w = 10;
     var l = 300;
     var arrow_ini = svgContainer.polygon( [p.x, p.y, p.x+l/3, p.y, p.x+l/3, p.y+w, p.x, p.y+w, p.x+(w/2),p.y+(w/2)] ).attr( { fill: color } ); 
@@ -64,7 +64,7 @@ var conf = {
   Venezuela:  { c: '#FFD400', f: 'flag-VEN', g: 'C' }
 }
 
-var figHeight = 160;
+var figHeight = 90;
 var figWidth = 480;
 d3.tsv("../data.tsv", function(data) {	
 	for( i = 0; i < data.length; i++ ){

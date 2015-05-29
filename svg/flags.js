@@ -40,94 +40,46 @@ var createFlag = function( svgContainer, xCoord, yCoord, flagName, winProba, loo
 
 var createSvgContainer = function( svgId ){
 	var body = document.getElementsByTagName('body')[0];
-    var svg = document.createElement('svg');
-    svg.id = svgId;
-    
-    var br = document.createElement('br');
+  var svg = document.createElement('svg');
+  svg.id = svgId;
+  
+  var br = document.createElement('br');
    
-    body.appendChild(svg);
-    body.appendChild(br);
+  body.appendChild(svg);
+  body.appendChild(br);
 }
 
-var flagConvertion = {
-                      Argentina: 'flag-ARG',
-                      Bolivia: 'flag-BOL',
-                      Brazil: 'flag-BRA',
-                      Chile: 'flag-CHI',
-                      Colombia: 'flag-COL',
-                      Ecuador: 'flag-ECU',
-                      Jamaica: 'flag-JAM',
-                      Mexico: 'flag-MEX',
-                      Paraguay: 'flag-PAR',
-                      Peru: 'flag-PER',
-                      Uruguay: 'flag-URU',
-                      Venezuela: 'flag-VEN'
-					};
-
-var colorConvertion = {
-        Argentina: '#FBAA19',
-        Bolivia: '#FFD400',
-        Brazil: '#FFF200',
-        Chile: '#ED1C24',
-        Colombia: '#FFCB05',
-        Ecuador: '#FFCB05',
-        Jamaica: '#FFD400',
-        Mexico: '#ED1C24',
-        Paraguay: '#ED1C24',
-        Peru: '#ED1C24',
-        Uruguay: '#FBAA19',
-        Venezuela: '#FFD400'
-		};
-
-
-var show = [
-            {
-            	title: 'Grupo A',
-            	teams: ['Chile', 'Bolivia', 'Ecuador', 'Mexico']
-            },
-            {
-            	title: 'Grupo B',
-            	teams: ['Argentina', 'Jamaica', 'Paraguay', 'Uruguay']
-            },
-            {
-            	title: 'Grupo C',
-            	teams: ['Brazil', 'Colombia', 'Peru', 'Venezuela']
-            }            
-            ];
+var conf = {
+  Argentina:  { c: '#FBAA19', f: 'flag-ARG', g: 'B' },
+  Bolivia:    { c: '#FFD400', f: 'flag-BOL', g: 'A' },
+  Brazil:     { c: '#FFF200', f: 'flag-BRA', g: 'C' },
+  Chile:      { c: '#ED1C24', f: 'flag-CHI', g: 'A' },
+  Colombia:   { c: '#FFCB05', f: 'flag-COL', g: 'C' },
+  Ecuador:    { c: '#FFCB05', f: 'flag-ECU', g: 'A' },
+  Jamaica:    { c: '#FFD400', f: 'flag-JAM', g: 'B' },
+  Mexico:     { c: '#ED1C24', f: 'flag-MEX', g: 'A' },
+  Paraguay:   { c: '#ED1C24', f: 'flag-PAR', g: 'B' },
+  Peru:       { c: '#ED1C24', f: 'flag-PER', g: 'C' },
+  Uruguay:    { c: '#FBAA19', f: 'flag-URU', g: 'B' },
+  Venezuela:  { c: '#FFD400', f: 'flag-VEN', g: 'C' }
+}
 
 var figHeight = 160;
 var figWidth = 480;
-d3.tsv("../data.tsv", function(data) {
-	
-	var countryData = {};
-	
+d3.tsv("../data.tsv", function(data) {	
 	for( i = 0; i < data.length; i++ ){
 		var equipo = data[i]["Equipo"];
-		countryData[equipo] = data[i];
+		conf[equipo]['d'] = data[i];
 	}
-	
-	for( i = 0; i < show.length; i++ ){
-		
-		var title = show[i]['title'];
-		var teams = show[i]['teams'];
-		var countTeams = teams.length;
-		
-		var svgId = title.replace(/\s/g, '');
-		//createSvgContainer(svgId);
-		
-		var s = Snap( '#'+svgId ).attr({
-		    height: figHeight*4,
-		    width: figWidth,
-		    id: svgId
-		});
-		var xCoord = 0;
-		var yCoord = 0;
-		for( j = 0; j < teams.length; j++ ){
-			var percent = Math.round(countryData[teams[j]]["Cuartos"]*100, 3);
-			
-			createFlag(s,xCoord, yCoord,flagConvertion[teams[j]],percent+'%',(100-percent)+'%', colorConvertion[teams[j]]);
-			yCoord += figHeight;
-		}
-		console.log(s);
-	}
-});
+  var s = {
+    A: Snap( '#GrupoA' ).attr({ height: figHeight*4, width: figWidth, id: 'GrupoA' }),
+    B: Snap( '#GrupoB' ).attr({ height: figHeight*4, width: figWidth, id: 'GrupoB' }),
+    C: Snap( '#GrupoC' ).attr({ height: figHeight*4, width: figWidth, id: 'GrupoC' }),
+  };
+  var ycoord = { A: 0, B: 0, C: 0 };
+  $.each( conf, function( k, v ) {
+    var perc = Math.round( v.d.Cuartos*100, 3 );
+    createFlag( s[v.g], 0, ycoord[v.g], v.f, perc+'%', (100-perc)+'%', v.c );
+    ycoord[v.g] += figHeight;
+  } );
+} );

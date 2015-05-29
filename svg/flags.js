@@ -83,3 +83,7 @@ d3.tsv("../data.tsv", function(data) {
     ycoord[v.g] += figHeight;
   } );
 } );
+$('#myTab a').click(function (e) {
+  e.preventDefault()
+  $(this).tab('show')
+})

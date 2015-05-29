@@ -1,0 +1,97 @@
+d3.tsv( '../data.tsv', function( E, D ) {
+    var c = colorbrewer.Greens[9];
+    var fieldHeight = 35;
+    var fieldWidth = 90;
+    var margin = { top: 20, right: 30, bottom: 30, left: 40 };
+    var width = 960 - margin.left - margin.right;
+    var height = 500 - margin.top - margin.bottom;
+    
+    var canvas = d3.select("#tablaDatos")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    var headerGrp = canvas.append("g").attr("class", "headerGrp");
+    var rowsGrp = canvas.append("g").attr("class","rowsGrp");
+    var previousSort = null;
+
+    refreshTable(null);
+
+    function refreshTable(sortOn){
+
+      var header = headerGrp.selectAll("g")
+        .data( d3.keys( D[0] ) )
+        .enter().append( "g" )
+        .attr( "class", "header" )
+        .attr( "transform", function (d, i) {
+          return "translate(" + i * fieldWidth + ",0)";
+        })
+      .on( "click", function( d ){ return refreshTable(d); } );
+
+      header.append("rect")
+        .attr("width", fieldWidth-1)
+        .attr("height", fieldHeight);
+
+      header.append("text")
+        .attr("x", fieldWidth / 2)
+        .attr("y", fieldHeight / 2)
+        .attr("dy", ".45em")
+        .text(String);
+
+      var rows = rowsGrp.selectAll("g.row").data( D, function(d){ return d.Equipo; } );
+      var rowsEnter = rows.enter().append("svg:g")
+        .attr("class","row")
+        .attr("transform", function (d, i){
+          return "translate(0," + (i+1) * (fieldHeight+1) + ")";
+        });
+
+      var cells = rows.selectAll("g.cell").data( function( d ){ return d3.values(d); } );
+      var cellsEnter = cells.enter().append("svg:g")
+        .attr("class", "cell")
+        .attr("transform", function (d, i){
+          return "translate(" + i * fieldWidth + ",0)";
+        });
+
+      cellsEnter.append("rect")
+        .attr("width", fieldWidth-1)
+        .attr("height", fieldHeight)
+        .style( 'fill', function( d ) { return c[Math.floor( d*9 )] ? c[Math.floor( d*9 )] : 'white'; } );
+
+      cellsEnter.append("text")
+        .attr("x", fieldWidth / 2)
+        .attr("y", fieldHeight / 2)
+        .attr("dy", ".45em")
+        .style( 'fill', function( d ) { return Math.round( d*100 ) > 44 ? 'white' : 'black' } )
+        .text( function( d ) { return Math.round( d*10000 ) ? Math.round( d*100 )+'%' : d; } );
+
+      if(sortOn !== null) {
+        if(sortOn != previousSort){
+          rows.sort(function(a,b){return sort(a[sortOn], b[sortOn]);});     
+          previousSort = sortOn;
+        }
+        else{
+          rows.sort(function(a,b){return sort(b[sortOn], a[sortOn]);});
+          previousSort = null;
+        }
+        rows.transition()
+          .delay(function (d, i) { return i * 100; } )
+          .duration(1000)
+          .attr("transform", function (d, i){
+            return "translate(0," + (i+1) * (fieldHeight+1) + ")";
+          });
+      }
+    }
+
+    function sort( a, b ){
+      if( typeof a == "string" ){
+          return a.localeCompare( b );
+      }
+      else if( typeof a == "number" ){
+        return a > b ? 1 : a == b ? 0 : -1;
+      }
+      else if( typeof a == "boolean" ){
+        return b ? 1 : a ? -1 : 0;
+      }
+    }
+  } );

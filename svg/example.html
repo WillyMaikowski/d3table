@@ -3,22 +3,60 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>SVG work</title>
-    <link href='http://fonts.googleapis.com/css?family=Bree+Serif' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Bree+Serif' rel='stylesheet' type='text/css' />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../css/estilos.css" />
   </head>
   <body>
-   	<h1>Grupos</h1>
-   	<h2>Grupo A</h2>
-    <svg id="GrupoA"></svg>
-    <br />
-    <h2>Grupo B</h2>
-    <svg id="GrupoB"></svg>
-    <br />
-    <h2>Grupo C</h2>
-    <svg id="GrupoC"></svg>
+    <div class="row container">
+      <div class="col-md-12">
+        <h1>Predicciones Copa América 2015</h1>
+        <div role="tabpanel">
+          <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active"><a href="#Grupos" aria-controls="Grupos" role="tab" data-toggle="tab">Grupos</a></li>
+            <li role="presentation"><a href="#tabla" aria-controls="tabla" role="tab" data-toggle="tab">Predicción de campeonato</a></li>
+          </ul>
+          <div class="tab-content">  
+            <div role="tabpanel" class="tab-pane active" id="Grupos">
+              <h2>Etapa Grupal</h2>
+              <h3>Grupo A</h3>
+              <svg id="GrupoA"></svg>
+              <br />
+              <h3>Grupo B</h3>
+              <svg id="GrupoB"></svg>
+              <br />
+              <h3>Grupo C</h3>
+              <svg id="GrupoC"></svg>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="tabla">
+              <svg id="tablaDatos"></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div class="row container">
+      <hr>
+      <div class="col-md-12">
+        <div class="col-md-4">
+          <a href="http://www.ceine.cl/" title="Centro de Inteligencia de Negocios"><img src="../images/ceine_logo.png" title="Centro de Inteligencia de Negocios" width="250" height="83"></a>
+        </div>
+        <div class="col-md-4">
+          <a href="http://www.dii.uchile.cl/" title="Ingeniería Civil Industrial Universidad de Chile"><img src="../images/logo_50anos_final-sinfondo1.png" title="Ingeniería Civil Industrial Universidad de Chile" width="300" height="65"></a>
+        </div>
+        <div class="col-md-4">
+          <a href="http://mbe.uchile.cl/" title="Master in Business Engineering Ingeniería Civil Industrial Universidad de Chile"><img src="../images/logo-MBE.jpg" title="Master in Business Engineering Ingeniería Civil Industrial Universidad de Chile" width="250" height="86"></a>
+        </div>
+      </div>
+    </div>
+    <br>
     <script type="text/javascript" src="../js/d3.min.js"></script>
     <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="snap.svg-min.js"></script>
     <script type="text/javascript" src="flags.js"></script>
-    
+    <script type="text/javascript" src="../js/colorbrewer.min.js"></script>
+    <script type="text/javascript" src="table.js"></script>
   </body>
 </html>

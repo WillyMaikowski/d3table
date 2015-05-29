@@ -21,21 +21,24 @@ var fstar = function( x, y, w ) {
 };
 
 var createFlag = function( svgContainer, xCoord, yCoord, flagName, winProba, looseProba, color ){
-    Snap.load( 'sprites.svg', function( f ) {
-      var flag = f.select( '#'+flagName ).attr({ x:xCoord, y:yCoord, viewBox: '0 0 600 600' });
-      svgContainer.append( flag );
+  var p = { x: 90, y: 35 + yCoord };
+  var w = 10;
+  var l = 300;
+  var arrow_ini = svgContainer.polygon( [p.x, p.y, p.x+l/3, p.y, p.x+l/3, p.y+w, p.x, p.y+w, p.x+(w/2),p.y+(w/2)] ).attr( { fill: color, class: flagName, visibility: 'hidden' } ); 
+  var arrow_pasar = svgContainer.polygon( [p.x+l/3, p.y, p.x+l, p.y, p.x+l+(w/2), p.y+(w/2), p.x+l, p.y+w, p.x+l/3, p.y+w] ).attr( { fill: color, class: flagName, visibility: 'hidden' } );
+  var arrow_nopasar = svgContainer.polygon( [p.x+l/3,p.y+w,p.x+l/3,p.y+w+l/6,p.x+l/3-w/2,p.y+l/6+3*w/2,p.x+l/3-w,p.y+w+l/6,p.x+l/3-w,p.y+w] ).attr( { fill: '#DEDEDE', class: flagName, visibility: 'hidden' } );
+  var star_pasar = svgContainer.polygon( fstar( p.x+l+10, p.y, w ) ).attr( { fill: color, class: flagName, visibility: 'hidden' } );
+  var pasar_txt = svgContainer.text( p.x+l+10.5, p.y+w/2+4, winProba ).attr( { fill: '#FFF', fontFamily: 'Bree Serif', class: flagName, visibility: 'hidden' } );
+  var star_nopasar = svgContainer.polygon( fstar( p.x+l/3-2*w, p.y+l/6+3*w, w ) ).attr( { fill: '#DEDEDE', class: flagName, visibility: 'hidden' } );
+  var nopasar_txt = svgContainer.text( p.x+l/3-2*w+5, p.y+l/6+7*w/2+4, looseProba ).attr( { fill: '#FFF', fontFamily: 'Bree Serif', class: flagName, visibility: 'hidden' } );
+  Snap.load( 'sprites.svg', function( f ) {
+    var flag = f.select( '#'+flagName ).attr({ x:xCoord, y:yCoord, viewBox: '0 0 600 600' });
+    flag.mouseover( function() {
+      svgContainer.selectAll( '.'+flagName ).animate( { visibility: 'visible' }, 500 );
     } );
-    var p = { x: 90, y: 35 + yCoord };
-    var w = 10;
-    var l = 300;
-    var arrow_ini = svgContainer.polygon( [p.x, p.y, p.x+l/3, p.y, p.x+l/3, p.y+w, p.x, p.y+w, p.x+(w/2),p.y+(w/2)] ).attr( { fill: color } ); 
-    var arrow_pasar = svgContainer.polygon( [p.x+l/3, p.y, p.x+l, p.y, p.x+l+(w/2), p.y+(w/2), p.x+l, p.y+w, p.x+l/3, p.y+w] ).attr( { fill: color } );
-    var arrow_nopasar = svgContainer.polygon( [p.x+l/3,p.y+w,p.x+l/3,p.y+w+l/6,p.x+l/3-w/2,p.y+l/6+3*w/2,p.x+l/3-w,p.y+w+l/6,p.x+l/3-w,p.y+w] ).attr( { fill: '#DEDEDE' } );
-    var star_pasar = svgContainer.polygon( fstar( p.x+l+10, p.y, w ) ).attr( { fill: color } );
-    var pasar_txt = svgContainer.text( p.x+l+10.5, p.y+w/2+4, winProba ).attr( { fill: '#FFF', fontFamily: 'Bree Serif' } );
-    var star_nopasar = svgContainer.polygon( fstar( p.x+l/3-2*w, p.y+l/6+3*w, w ) ).attr( { fill: '#DEDEDE' } );
-    var nopasar_txt = svgContainer.text( p.x+l/3-2*w+5, p.y+l/6+7*w/2+4, looseProba ).attr( { fill: '#FFF', fontFamily: 'Bree Serif' } );  
-    
+    svgContainer.append( flag );
+  } );
+
 }
 
 var createSvgContainer = function( svgId ){

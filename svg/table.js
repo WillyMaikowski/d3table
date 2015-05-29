@@ -1,4 +1,9 @@
-d3.tsv( '../data.tsv', function( E, D ) {
+d3table( '../data_local.tsv', "#tablaDatos_local" );
+d3table( '../data_no_local.tsv', "#tablaDatos_no_local" );
+
+
+function d3table( dataSource, svgContainer ){
+d3.tsv( dataSource, function( E, D ) {
     var c = colorbrewer.Greens[9];
     var fieldHeight = 35;
     var fieldWidth = 90;
@@ -6,7 +11,7 @@ d3.tsv( '../data.tsv', function( E, D ) {
     var width = 960 - margin.left - margin.right;
     var height = 500 - margin.top - margin.bottom;
     
-    var canvas = d3.select("#tablaDatos")
+    var canvas = d3.select(svgContainer)
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
       .append("g")
@@ -95,3 +100,4 @@ d3.tsv( '../data.tsv', function( E, D ) {
       }
     }
   } );
+}
